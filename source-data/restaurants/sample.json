@@ -1,0 +1,191 @@
+[
+  {
+    "aggregateRating": {
+      "reviewCount": 163,
+      "@type": "AggregateRating",
+      "ratingValue": 4.2
+    },
+    "review": [
+      {
+        "reviewRating": {
+          "ratingValue": 5
+        },
+        "datePublished": "2019-10-11",
+        "description": "Authentic Chinese food!",
+        "author": "Alice"
+      },
+      {
+        "reviewRating": {
+          "ratingValue": 4
+        },
+        "datePublished": "2019-10-10",
+        "description": "Good place to try food from different region of China",
+        "author": "Bob"
+      }
+    ],
+    "servesCuisine": "Chinese",
+    "priceRange": "moderate",
+    "name": "Taste",
+    "address": {
+      "addressLocality": "Palo Alto",
+      "addressRegion": "CA",
+      "streetAddress": "423 University Ave",
+      "postalCode": "94301",
+      "addressCountry": "US"
+    },
+    "@context": "http://schema.org/",
+    "@type": "Restaurant",
+    "telephone": "+16503236488"
+  },
+  {
+    "aggregateRating": {
+      "reviewCount": 1008,
+      "@type": "AggregateRating",
+      "ratingValue": 4.5
+    },
+    "review": [
+      {
+        "reviewRating": {
+          "ratingValue": 5
+        },
+        "datePublished": "2020-1-11",
+        "description": "Best pizza in Palo Alto, period.",
+        "author": "Charlie"
+      },
+      {
+        "reviewRating": {
+          "ratingValue": 5
+        },
+        "datePublished": "2018-12-19",
+        "description": "Forget about domino, this is the real pizza.",
+        "author": "Dan"
+      }
+    ],
+    "servesCuisine": "pizza",
+    "priceRange": "moderate",
+    "name": "Pizzeria Delfina",
+    "address": {
+      "addressLocality": "Palo Alto",
+      "addressRegion": "CA",
+      "streetAddress": "651 Emerson St",
+      "postalCode": "94301",
+      "addressCountry": "US"
+    },
+    "@context": "http://schema.org/",
+    "@type": "Restaurant",
+    "telephone": "+16503532208"
+  },
+  {
+    "aggregateRating": {
+      "reviewCount": 1388,
+      "@type": "AggregateRating",
+      "ratingValue": 4.7
+    },
+    "review": [
+      {
+        "reviewRating": {
+          "ratingValue": 5
+        },
+        "datePublished": "2019-02-14",
+        "description": "Finally, a good ramen place in Palo Alto.",
+        "author": "Eve"
+      },
+      {
+        "reviewRating": {
+          "ratingValue": 4
+        },
+        "datePublished": "2018-08-08",
+        "description": "It's a great place, but the wait time is just insane.",
+        "author": "Frank"
+      }
+    ],
+    "servesCuisine": "ramen",
+    "priceRange": "cheap",
+    "name": "Ramen Nagi",
+    "address": {
+      "addressLocality": "Palo Alto",
+      "addressRegion": "CA",
+      "streetAddress": "541 Bryant St",
+      "postalCode": "94301",
+      "addressCountry": "US"
+    },
+    "@context": "http://schema.org/",
+    "@type": "Restaurant"
+  },
+  {
+    "aggregateRating": {
+      "reviewCount": 318,
+      "@type": "AggregateRating",
+      "ratingValue": 4.4
+    },
+    "review": [
+      {
+        "reviewRating": {
+          "ratingValue": 4
+        },
+        "datePublished": "2019-7-23",
+        "description": "Love the pancakes.",
+        "author": "Grace"
+      },
+      {
+        "reviewRating": {
+          "ratingValue": 5
+        },
+        "datePublished": "2019-12-11",
+        "description": "Nice place for a breakfast, close to the shopping mall.",
+        "author": "Heidi"
+      }
+    ],
+    "servesCuisine": "italian",
+    "priceRange": "moderate",
+    "name": "Tootsie's At the Stanford Barn",
+    "address": {
+      "addressLocality": "Palo Alto",
+      "addressRegion": "CA",
+      "streetAddress": "700 Welch Rd",
+      "postalCode": "94305",
+      "addressCountry": "US"
+    },
+    "@context": "http://schema.org/",
+    "@type": "Restaurant",
+    "telephone": "+16505668445"
+  },
+  {
+    "aggregateRating": {
+      "reviewCount": 1177,
+      "@type": "AggregateRating",
+      "ratingValue": 4.6
+    },
+    "review": [
+      {
+        "reviewRating": {
+          "ratingValue": 5
+        },
+        "datePublished": "2016-3-11",
+        "description": "Expensive, but taste good.",
+        "author": "Ivan"
+      },
+      {
+        "reviewRating": {
+          "ratingValue": 5
+        },
+        "datePublished": "2017-9-15",
+        "description": "Great service, but make sure you reserve ahead of time.",
+        "author": "Judy"
+      }
+    ],
+    "servesCuisine": "greek",
+    "priceRange": "expensive",
+    "name": "Evvia Estiatorio",
+    "address": {
+      "addressLocality": "Palo Alto",
+      "addressRegion": "CA",
+      "streetAddress": "420 Emerson St",
+      "postalCode": "94301",
+      "addressCountry": "US"
+    },
+    "@context": "http://schema.org/",
+    "@type": "Restaurant",
+    "telephone": "+16503260983"
+  }
+]
