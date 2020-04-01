@@ -1,4 +1,5 @@
 geniedir ?= ..
+thingpedia ?= thingpedia
 
 memsize := $(shell echo $$(($$(grep MemTotal /proc/meminfo | sed 's/[^0-9]//g')/1000-2500)))
 genie = node --experimental_worker --max_old_space_size=$(memsize) $(geniedir)/tool/genie.js
@@ -28,7 +29,7 @@ $(experiment)/schema.tt : $(experiment)/schema.org.tt $(experiment)/data.json
 	$(genie) webqa-trim-class --thingpedia $(experiment)/schema.org.tt -o $@ --data ./$(experiment)/data.json --entities $(experiment)/entities.json
 
 $(experiment)/constants.tsv: $(experiment)/parameter-datasets.tsv $(experiment)/schema.tt
-	$(genie) sample-constants -o $@ --parameter-datasets $(experiment)/parameter-datasets.tsv --thingpedia $(experiment)/schema.tt --devices org.schema.$($(experiment)_class_name)
+	$(genie) sample-constants -o $@ --parameter-datasets $(experiment)/parameter-datasets.tsv --thingpedia $(experiment)/schema.tt --devices org.schema.$(class_name)
 	cat $(geniedir)/data/en-US/constants.tsv >> $@
 
 $(experiment)/synthetic-for-turking.tsv : $(experiment)/schema.tt emptydataset.tt $(geniedir)/languages/thingtalk/en/*.genie
@@ -65,7 +66,7 @@ shared-parameter-datasets.tsv:
 	  download-string-values --manifest $@ --append-manifest -d shared-parameter-datasets
 
 $(experiment)/parameter-datasets.tsv : $(experiment)/schema.tt $(experiment)/data.json shared-parameter-datasets.tsv
-	$(genie) webqa-make-string-datasets --manifest $@ -d $(experiment)/parameter-datasets --thingpedia $(experiment)/schema.tt --data $(experiment)/data.json --class-name $($(experiment)_class_name)
+	$(genie) webqa-make-string-datasets --manifest $@ -d $(experiment)/parameter-datasets --thingpedia $(experiment)/schema.tt --data $(experiment)/data.json --class-name $(class_name)
 	sed 's|\tshared-parameter-datasets|\t../shared-parameter-datasets|g' shared-parameter-datasets.tsv >> $@
 
 clean:
