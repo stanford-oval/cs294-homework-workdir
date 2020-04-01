@@ -1,6 +1,5 @@
-emptydataset.tt
+hw1/emptydataset.tt
 
-shared-parameter-datasets.tsv
-shared-parameter-datasets/*
+hw1/shared-parameter-datasets.tsv
+hw1/shared-parameter-datasets/*
 
-synthetic*.tsv
