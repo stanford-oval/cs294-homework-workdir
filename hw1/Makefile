@@ -17,7 +17,7 @@ white_list = restaurant,review
 generate_flags = $(foreach v,$(synthetic_flags),--set-flag $(v)) --white-list $(white_list)
 
 $(experiment)/schema.org.tt: $(geniedir)/tool/webqa-process-schemaorg.js
-	$(genie) webqa-process-schemaorg -o $@ --class-name $(class_name)
+	$(genie) webqa-process-schemaorg -o $@ --class-name $(class_name) --white-list $(white_list)
 
 emptydataset.tt:
 	echo 'dataset @empty {}' > $@
