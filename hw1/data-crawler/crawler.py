@@ -35,6 +35,7 @@ import urllib.parse
 import time
 from bs4 import BeautifulSoup
 
+init_url = 'https://www.yelp.com/search?find_desc=Restaurants&find_loc=stanford'
 base_url = 'https://www.yelp.com/'
 target_size = 1000
 
@@ -125,7 +126,6 @@ def add_urls(queue, html, url_pattern, visited):
 def main():
     output = []
     try:
-        init_url = 'https://www.yelp.com/search?find_desc=Restaurants&find_loc=stanford'
         crawl(
             init_url,
             lambda url: url.startswith('https://www.yelp.com/biz/'),
