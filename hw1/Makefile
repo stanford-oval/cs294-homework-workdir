@@ -22,8 +22,8 @@ $(experiment)/schema.org.tt: $(geniedir)/tool/webqa-process-schemaorg.js
 emptydataset.tt:
 	echo 'dataset @empty {}' > $@
 
-$(experiment)/data.json : $(experiment)/schema.org.tt source-data/$(experiment)/*.json $(geniedir)/tool/webqa-normalize-data.js
-	$(genie) webqa-normalize-data -o $@ --thingpedia $(experiment)/schema.org.tt source-data/$(experiment)/*.json
+$(experiment)/data.json : $(experiment)/schema.org.tt source-data/$(experiment)/*.json 
+	$(genie) webqa-normalize-data --data-output $@ --thingpedia $(experiment)/schema.org.tt source-data/$(experiment)/*.json
 	
 $(experiment)/schema.tt : $(experiment)/schema.org.tt $(experiment)/data.json
 	$(genie) webqa-trim-class --thingpedia $(experiment)/schema.org.tt -o $@ --data ./$(experiment)/data.json --entities $(experiment)/entities.json
@@ -69,6 +69,16 @@ $(experiment)/parameter-datasets.tsv : $(experiment)/schema.tt $(experiment)/dat
 	$(genie) webqa-make-string-datasets --manifest $@ -d $(experiment)/parameter-datasets --thingpedia $(experiment)/schema.tt --data $(experiment)/data.json --class-name $(class_name)
 	sed 's|\tshared-parameter-datasets|\t../shared-parameter-datasets|g' shared-parameter-datasets.tsv >> $@
 
+skill-package/data.json: $(experiment)/data.json 
+	cp $(experiment)/data.json skill-package/data.json
+
+skill-package/meta.json : $(experiment)/schema.tt source-data/$(experiment)/*.json 
+	$(genie) webqa-normalize-data --meta-output $@ --thingpedia $(experiment)/schema.tt source-data/$(experiment)/*.json
+
+skill-package.zip: skill-package/data.json skill-package/meta.json skill-package/index.js skill-package/package.json
+	zip -j $@ skill-package/*
+
 clean:
 	rm -rf $(experiment)/synthetic* $(experiment)/data.json $(experiment)/entities.json $(experiment)/parameter-datasets* $(experiment)/schema.org.tt $(experiment)/schema.tt $(experiment)/everything.tsv $(experiment)/constants.tsv
+	rm -rf skill-package/data.json skill-package/meta.json
 
