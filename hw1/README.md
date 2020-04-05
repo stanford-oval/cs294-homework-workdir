@@ -80,8 +80,12 @@ Then you can run the same command as shown in the restaurant example to create y
 
 
 ## Submit your device to Thingpedia
-
 Once you finished your `schema.tt` you can prepare your skill to upload to Thingpedia. 
+
+First you will need to upload all the string set and entities under `$(your-folder-name)/parameter-datasets/` to Thingpedia.
+You can find the portal to upload them at [https://almond.stanford.edu/thingpedia/strings]() and [https://almond.stanford.edu/thingpedia/entities](). 
+(we probably should recommend using command line tool for uploading?)
+
 To do so, simply run 
 ```bash
 make skill-library.zip
