@@ -1,0 +1,149 @@
+{
+  "Thing": {
+    "extends": [],
+    "fields": {
+      "description": {
+        "isArray": false,
+        "type": "tt:String"
+      }
+    }
+  },
+  "CreativeWork": {
+    "extends": [
+      "Thing"
+    ],
+    "fields": {
+      "author": {
+        "isArray": false,
+        "type": "Person"
+      },
+      "datePublished": {
+        "isArray": false,
+        "type": "tt:Date"
+      }
+    }
+  },
+  "Place": {
+    "extends": [
+      "Thing"
+    ],
+    "fields": {
+      "address": {
+        "isArray": false,
+        "type": {
+          "streetAddress": {
+            "isArray": false,
+            "type": "tt:String"
+          },
+          "addressCountry": {
+            "isArray": false,
+            "type": "tt:EntityLower"
+          },
+          "addressRegion": {
+            "isArray": false,
+            "type": "tt:Entity"
+          },
+          "postalCode": {
+            "isArray": false,
+            "type": "tt:String"
+          },
+          "addressLocality": {
+            "isArray": false,
+            "type": "tt:String"
+          }
+        }
+      },
+      "aggregateRating": {
+        "isArray": false,
+        "type": {
+          "reviewCount": {
+            "isArray": false,
+            "type": "tt:Number"
+          },
+          "ratingValue": {
+            "isArray": false,
+            "type": "tt:Number"
+          }
+        }
+      },
+      "telephone": {
+        "isArray": false,
+        "type": "tt:Entity"
+      },
+      "review": {
+        "isArray": true,
+        "type": "Review"
+      },
+      "geo": {
+        "isArray": false,
+        "type": {
+          "latitude": {
+            "isArray": false,
+            "type": "tt:Number"
+          },
+          "longitude": {
+            "isArray": false,
+            "type": "tt:Number"
+          }
+        }
+      }
+    }
+  },
+  "Organization": {
+    "extends": [
+      "Thing"
+    ],
+    "fields": {}
+  },
+  "LocalBusiness": {
+    "extends": [
+      "Place",
+      "Organization"
+    ],
+    "fields": {
+      "priceRange": {
+        "isArray": false,
+        "type": "tt:String"
+      }
+    }
+  },
+  "FoodEstablishment": {
+    "extends": [
+      "LocalBusiness"
+    ],
+    "fields": {
+      "servesCuisine": {
+        "isArray": false,
+        "type": "tt:String"
+      }
+    }
+  },
+  "Person": {
+    "extends": [
+      "Thing"
+    ],
+    "fields": {}
+  },
+  "Review": {
+    "extends": [
+      "CreativeWork"
+    ],
+    "fields": {
+      "reviewRating": {
+        "isArray": false,
+        "type": {
+          "ratingValue": {
+            "isArray": false,
+            "type": "tt:Number"
+          }
+        }
+      }
+    }
+  },
+  "Restaurant": {
+    "extends": [
+      "FoodEstablishment"
+    ],
+    "fields": {}
+  }
+}
