@@ -86,7 +86,7 @@ First you will need to upload all the string set and entities under `$(your-fold
 You can find the portal to upload them at [https://almond.stanford.edu/thingpedia/strings]() and [https://almond.stanford.edu/thingpedia/entities](). 
 (we probably should recommend using command line tool for uploading?)
 
-To do so, simply run 
+Then, you can upload your skill. To do so, simply run 
 ```bash
 make skill-library.zip
 ```
