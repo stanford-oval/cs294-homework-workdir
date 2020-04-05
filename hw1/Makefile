@@ -20,7 +20,7 @@ $(experiment)/schema.org.tt: $(geniedir)/tool/webqa-process-schemaorg.js
 	$(genie) webqa-process-schemaorg -o $@ --class-name $(class_name) --white-list $(white_list)
 
 emptydataset.tt:
-	echo 'dataset @empty {}' > $@
+	echo 'dataset @org.schema.$(class_name) {}' > $@
 
 $(experiment)/data.json : $(experiment)/schema.org.tt source-data/$(experiment)/*.json 
 	$(genie) webqa-normalize-data --data-output $@ --thingpedia $(experiment)/schema.org.tt source-data/$(experiment)/*.json
