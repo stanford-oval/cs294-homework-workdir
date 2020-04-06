@@ -1,14 +1,14 @@
 # Homework 1
-In this homework, you will build a toy QA skill for Almond virtual assistant on 
+In this homework, you will build a toy question answering (QA) skill for the Almond virtual assistant on 
 a domain of your choice using schema.org data from websites.
 This workdir provides you a `Makefile` to help you run the scripts needed, as 
-well as an example QA skill for restaurant domain.
+well as an example QA skill for the restaurant domain.
 
-## Acquiring dependencies
-This homework requires `nodejs` (>=8.0), and `yarn` as a package manager. 
-Follow the guide from their own websites to install them on your local machine.
+## Install dependencies
+This homework requires `java`, `nodejs` (>=10.0), and `yarn` as a package manager. 
+Follow the guide from their websites to install them on your local machine. See [nodejs](https://nodejs.org/en/download/) and [yarn](https://classic.yarnpkg.com/en/docs/install/) for installation details. You can check your installation by running `node --version` and `yarn --version`.
 
-In addition to that, you will need 3 libraries: 
+In addition, you will need 3 libraries from OVAL: 
 [genie-toolkit](https://github.com/stanford-oval/genie-toolkit), 
 [almond-tokenizer](https://github.com/stanford-oval/almond-tokenizer),
 and [thingpedia-cli](https://github.com/stanford-oval/thingpedia-cli). 
@@ -19,16 +19,17 @@ Make sure you run `yarn` after cloning.
 
 
 ## Configuration 
+Follow this simple [instruction](instructions/almond-registration.md) to register as a Thingpedia developer, and get your developer key. 
+We also suggests you to follow at least one of the tutorials to learn the basics of Thingpedia development.
+
 This workdir comes with a `Makefile` to help you run the scripts needed to build 
 the QA skill. You will need to configure the following field in the `Makefile`:
 
 - `geniedir`: set this to the path to where you installed `genie-toolkie`.
 - `developer_key`: set this to your own developer key in Thingpedia. 
 
-Follow this simple [instruction](instructions/almond-registration.md) to register as a Thingpedia developer, and get your developer key. 
-We also suggests you to follow at least one of the tutorials to learn the basics of Thingpedia development.
 
-Before you move on, make sure you keep your tokenizer running in the background: go to `almond-tokenizer`, Run
+Before you move on, make sure you keep your tokenizer running in the background: go to `almond-tokenizer` directory and run
 ```bash
 LANGUAGES=en ./run.sh
 ```
@@ -103,8 +104,8 @@ For example, type the following command in web almond to return all data you col
 ## Homework submission
 Submit a simple text file to include the following information:
 
+- A link to a private fork of the this repository containing the data you collected and `schema.tt` you generated and tuned.
 - The domain you choose
 - The website you use to collect your data
-- A link to a private fork of the this repository containing the data you collected and `schema.tt` you generated and tuned.
 - All the changes you made to the automatically generated `schema.tt`
-- A list of example questions can be answered by your QA skill
+- A list of example questions that can be answered by your QA skill
