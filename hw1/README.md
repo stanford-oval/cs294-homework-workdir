@@ -6,16 +6,39 @@ well as an example QA skill for the restaurant domain.
 
 ## Install dependencies
 This homework requires `java`, `nodejs` (>=10.0), and `yarn` as a package manager. 
-Follow the guide from their websites to install them on your local machine. See [nodejs](https://nodejs.org/en/download/) and [yarn](https://classic.yarnpkg.com/en/docs/install/) for installation details. You can check your installation by running `node --version` and `yarn --version`.
+Follow the guide from their websites to install them on your local machine. 
+See [nodejs](https://nodejs.org/en/download/) and [yarn](https://classic.yarnpkg.com/en/docs/install/) for installation details. 
+You can check your installation by running `node --version` and `yarn --version`.
 
 In addition, you will need 3 libraries from OVAL: 
 [genie-toolkit](https://github.com/stanford-oval/genie-toolkit), 
 [almond-tokenizer](https://github.com/stanford-oval/almond-tokenizer),
 and [thingpedia-cli](https://github.com/stanford-oval/thingpedia-cli). 
 
-Follow their own instructions to install `almond-tokenizer` and `thingpedia-cli`, 
-and for `genie-toolkit`, we would like you to clone the Github directly. 
-Make sure you run `yarn` after cloning. 
+Run the following command to install them: 
+```bash
+# install genie-toolkit
+git clone git@github.com:stanford-oval/genie-toolkit.git
+cd genie-toolkit
+yarn
+cd ..
+
+# install almond-tokenizer
+git clone git@github.com:stanford-oval/almond-tokenizer.git
+cd almond-tokenizer
+./pull-dependencies.sh
+JAVAHOME=$(path-to-java) ant
+
+
+# install thingpedia-cli 
+yarn global add thingpedia-cli
+```
+
+After installation, you should get a command called `thingpedia`.
+If encounter `command not found`, make sure the Yarn global bin directory
+(usually `~/.yarn/bin`) is in your PATH. You can find the path with the command
+`yarn global bin`.
+
 
 
 ## Configuration 
