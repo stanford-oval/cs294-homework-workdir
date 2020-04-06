@@ -1,6 +1,8 @@
-geniedir ?= ..
-thingpedia ?= thingpedia
+geniedir ?= 
+developer_key ?= 
+username ?=
 
+thingpedia ?= thingpedia
 memsize := $(shell echo $$(($$(grep MemTotal /proc/meminfo | sed 's/[^0-9]//g')/1000-2500)))
 genie = node --experimental_worker --max_old_space_size=$(memsize) $(geniedir)/tool/genie.js
 
@@ -11,8 +13,8 @@ dataset_file ?= emptydataset.tt
 
 synthetic_flags ?= projection_with_filter projection aggregation schema_org filter_join multifilter multifilters no_stream
 
-class_name = Restaurant
-white_list = restaurant,review
+class_name = edu.stanford.cs294s.$(username)
+white_list = Restaurant,Review
 
 generate_flags = $(foreach v,$(synthetic_flags),--set-flag $(v)) --white-list $(white_list)
 
@@ -20,16 +22,16 @@ $(experiment)/schema.org.tt: $(geniedir)/tool/webqa-process-schemaorg.js
 	$(genie) webqa-process-schemaorg -o $@ --class-name $(class_name) --white-list $(white_list)
 
 emptydataset.tt:
-	echo 'dataset @org.schema.$(class_name) {}' > $@
+	echo 'dataset $(class_name_prefix).$(class_name) {}' > $@
 
 $(experiment)/data.json : $(experiment)/schema.org.tt source-data/$(experiment)/*.json 
-	$(genie) webqa-normalize-data --data-output $@ --thingpedia $(experiment)/schema.org.tt source-data/$(experiment)/*.json
+	$(genie) webqa-normalize-data --data-output $@ --thingpedia $(experiment)/schema.org.tt source-data/$(experiment)/*.json --class-name $(class_name)
 	
 $(experiment)/schema.tt : $(experiment)/schema.org.tt $(experiment)/data.json
 	$(genie) webqa-trim-class --thingpedia $(experiment)/schema.org.tt -o $@ --data ./$(experiment)/data.json --entities $(experiment)/entities.json
 
 $(experiment)/constants.tsv: $(experiment)/parameter-datasets.tsv $(experiment)/schema.tt
-	$(genie) sample-constants -o $@ --parameter-datasets $(experiment)/parameter-datasets.tsv --thingpedia $(experiment)/schema.tt --devices org.schema.$(class_name)
+	$(genie) sample-constants -o $@ --parameter-datasets $(experiment)/parameter-datasets.tsv --thingpedia $(experiment)/schema.tt --devices $(class_name)
 	cat $(geniedir)/data/en-US/constants.tsv >> $@
 
 $(experiment)/synthetic-for-turking.tsv : $(experiment)/schema.tt emptydataset.tt $(geniedir)/languages/thingtalk/en/*.genie
@@ -72,13 +74,16 @@ $(experiment)/parameter-datasets.tsv : $(experiment)/schema.tt $(experiment)/dat
 skill-package/data.json: $(experiment)/data.json 
 	cp $(experiment)/data.json skill-package/data.json
 
-skill-package/meta.json : $(experiment)/schema.tt source-data/$(experiment)/*.json 
-	$(genie) webqa-normalize-data --meta-output $@ --thingpedia $(experiment)/schema.tt source-data/$(experiment)/*.json
+skill-package/meta.json: $(experiment)/schema.tt source-data/$(experiment)/*.json 
+	$(genie) webqa-normalize-data --meta-output $@ --thingpedia $(experiment)/schema.tt source-data/$(experiment)/*.json --class-name $(class_name)
+
+skill-package/package.json:
+	echo '{ "name":"$(class_name_prefix).$(class_name)", "author": [ "$(username) <$(username)@stanford.edu>" ], "license":"BSD-3-Clause", "main":"index.js" }' > skill-package/package.json
 
 skill-package.zip: skill-package/data.json skill-package/meta.json skill-package/index.js skill-package/package.json
 	zip -j $@ skill-package/*
 
 clean:
-	rm -rf $(experiment)/synthetic* $(experiment)/data.json $(experiment)/entities.json $(experiment)/parameter-datasets* $(experiment)/schema.org.tt $(experiment)/schema.tt $(experiment)/everything.tsv $(experiment)/constants.tsv
-	rm -rf skill-package/data.json skill-package/meta.json
+	rm -rf $(experiment)/synthetic* $(experiment)/data.json $(experiment)/entities.json $(experiment)/parameter-datasets* $(experiment)/schema.org.tt $(experiment)/everything.tsv $(experiment)/constants.tsv
+	rm -rf skill-package/data.json skill-package/meta.json skill-package/package.json skill-package.zip
 
