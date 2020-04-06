@@ -28,7 +28,7 @@ git clone git@github.com:stanford-oval/almond-tokenizer.git
 cd almond-tokenizer
 ./pull-dependencies.sh
 JAVAHOME=$(path-to-java) ant
-
+# e.g., JAVAHOME=/usr/lib/jvm/openjdk-1.8.0 ant
 
 # install thingpedia-cli 
 yarn global add thingpedia-cli
@@ -40,19 +40,23 @@ If encounter `command not found`, make sure the Yarn global bin directory
 `yarn global bin`.
 
 
-
 ## Configuration 
-Follow this simple [instruction](instructions/almond-registration.md) to register as a Thingpedia developer, and get your developer key. 
-We also suggests you to follow at least one of the tutorials to learn the basics of Thingpedia development.
 
 This workdir comes with a `Makefile` to help you run the scripts needed to build 
 the QA skill. You will need to configure the following field in the `Makefile`:
 
 - `geniedir`: set this to the path to where you installed `genie-toolkie`.
 - `developer_key`: set this to your own developer key in Thingpedia. 
+Follow this simple [instruction](instructions/almond-registration.md) to register as a Thingpedia developer, 
+and get your developer key. 
+- `username`: set this either your sid, or your group name (no space, letter, numbers, and `.` only)
+
+We also suggests you to follow at least one of the [tutorials](https://almond.stanford.edu/doc/thingpedia-tutorial-hello-world.md) 
+to learn the basics of Thingpedia skill development.
 
 
-Before you move on, make sure you keep your tokenizer running in the background: go to `almond-tokenizer` directory and run
+Before you move forward, make sure you keep your tokenizer running in the background: 
+go to `almond-tokenizer` directory and run
 ```bash
 LANGUAGES=en ./run.sh
 ```
