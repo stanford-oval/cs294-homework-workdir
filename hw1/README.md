@@ -45,11 +45,13 @@ If encounter `command not found`, make sure the Yarn global bin directory
 This workdir comes with a `Makefile` to help you run the scripts needed to build 
 the QA skill. You will need to configure the following field in the `Makefile`:
 
-- `geniedir`: set this to the path to where you installed `genie-toolkie`.
+- `geniedir`: set this to the path to where your `genie-toolkie` is installed.
 - `developer_key`: set this to your own developer key in Thingpedia. 
 Follow this simple [instruction](instructions/almond-registration.md) to register as a Thingpedia developer, 
 and get your developer key. 
-- `username`: set this either your sid, or your group name (no space, letter, numbers, and `.` only)
+- `access_token`: set this to your access token in Thingpedia. 
+Again, see this [instruction](instructions/almond-registration.md) for where to find it.
+- `owner`: set this either your sid, or your group name (no space, letter, numbers, and `.` only)
 
 We also suggests you to follow at least one of the [tutorials](https://almond.stanford.edu/doc/thingpedia-tutorial-hello-world.md) 
 to learn the basics of Thingpedia skill development.
