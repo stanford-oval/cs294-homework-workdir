@@ -5,10 +5,10 @@ This workdir provides you a `Makefile` to help you run the scripts needed, as
 well as an example QA skill for the restaurant domain.
 
 ## Install dependencies
-This homework requires `java`, `nodejs` (>=10.0), and `yarn` as a package manager. 
+This homework requires `java (JDK)` (==1.11), Apache Ant, `nodejs` (>=10.0), and `yarn` as a package manager. 
 Follow the guide from their websites to install them on your local machine. 
 See [nodejs](https://nodejs.org/en/download/) and [yarn](https://classic.yarnpkg.com/en/docs/install/) for installation details. 
-You can check your installation by running `node --version` and `yarn --version`.
+You can check your installation by running `javac -version`, `ant -version`, `node --version` and `yarn --version`.
 
 In addition, you will need 3 libraries from OVAL: 
 [genie-toolkit](https://github.com/stanford-oval/genie-toolkit), 
@@ -18,17 +18,17 @@ and [thingpedia-cli](https://github.com/stanford-oval/thingpedia-cli).
 Run the following command to install them: 
 ```bash
 # install genie-toolkit
-git clone git@github.com:stanford-oval/genie-toolkit.git
+git clone https://github.com/stanford-oval/genie-toolkit.git
 cd genie-toolkit
 yarn
 cd ..
 
 # install almond-tokenizer
-git clone git@github.com:stanford-oval/almond-tokenizer.git
+git clone https://github.com/stanford-oval/almond-tokenizer.git
 cd almond-tokenizer
-./pull-dependencies.sh
+./pull-dependencies.sh # This will download ~2 GB data
 JAVAHOME=$(path-to-java) ant
-# e.g., JAVAHOME=/usr/lib/jvm/openjdk-1.8.0 ant
+# e.g., JAVAHOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64 ant
 
 # install thingpedia-cli 
 yarn global add thingpedia-cli
@@ -43,17 +43,17 @@ If encounter `command not found`, make sure the Yarn global bin directory
 ## Configuration 
 
 This workdir comes with a `Makefile` to help you run the scripts needed to build 
-the QA skill. You will need to configure the following field in the `Makefile`:
+the QA skill. You will need to configure the following fields in the [`Makefile`](Makefile):
 
-- `geniedir`: set this to the path to where your `genie-toolkie` is installed.
+- `geniedir`: set this to the absolute path of where `genie-toolkie` is installed.
 - `developer_key`: set this to your own developer key in Thingpedia. 
 Follow this simple [instruction](instructions/almond-registration.md) to register as a Thingpedia developer, 
 and get your developer key. 
 - `access_token`: set this to your access token in Thingpedia. 
 Again, see this [instruction](instructions/almond-registration.md) for where to find it.
-- `owner`: set this either your sid, or your group name (no space, letter, numbers, and `.` only)
+- `owner`: set this either your sid, or your group name (letter, numbers, and `.` only; no space)
 
-We also suggests you to follow at least one of the [tutorials](https://almond.stanford.edu/doc/thingpedia-tutorial-hello-world.md) 
+We also suggest that you to follow at least one of the [tutorials](https://almond.stanford.edu/doc/thingpedia-tutorial-hello-world.md) 
 to learn the basics of Thingpedia skill development.
 
 
@@ -65,8 +65,8 @@ LANGUAGES=en ./run.sh
 
 
 ## An Example QA Skill: Restaurant
-This workdir comes with a sample data for restaurants: `./source-data/restaurants/sample.json`. 
-It is similar to what you can get from Yelp pages, where it contains schema.org markups in the form of `json-ld`.
+This work directory comes with a sample data for restaurants: [`./source-data/restaurants/sample.json`](source-data/restaurants/sample.json). 
+It is similar to what you can crawl from yelp.com pages, which contain schema.org markups in the form of [`json-ld`](https://en.wikipedia.org/wiki/JSON-LD).
 
 With this sample data you can simply run the following two commands under `hw1` directory to 
 get a manifest, and a set of value datasets for your skill.
@@ -76,10 +76,10 @@ make restaurants/schema.tt
 make restaurants/parameter-datasets.tsv
 ```
 
-The `schema.tt` contains the function signature of your skill. Each function has a list of parameters. 
-And each parameters has one or more canonical annotations. 
-Note that we only offer very basic heuristic to generate these annotations.
-So to improve the natural language for your skill, you need to tweak these annotations manually. 
+The `schema.tt` contains the function signature of your skill. Each function has a list of parameters, and
+each parameters has one or more canonical annotations. 
+Note that we only offer very basic heuristics to automatically generate these annotations.
+Therefore, to improve the natural language part for your skill, you need to tweak these annotations manually. 
 A full documentation of different annotation types can be found [here](instructions/nl-annotations.md).
 
 You can also update the `canonical` annotation of a function. By default, it's the same as the function name.
