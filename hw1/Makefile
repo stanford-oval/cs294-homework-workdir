@@ -1,7 +1,7 @@
 geniedir ?= 
 developer_key ?= 
 access_token ?=
-username ?=
+owner ?=
 
 thingpedia ?= thingpedia
 memsize := $(shell echo $$(($$(grep MemTotal /proc/meminfo | sed 's/[^0-9]//g')/1000-2500)))
@@ -14,7 +14,7 @@ dataset_file ?= emptydataset.tt
 
 synthetic_flags ?= projection_with_filter projection aggregation schema_org filter_join multifilter multifilters no_stream
 
-class_name = edu.stanford.cs294s.$(username)
+class_name = edu.stanford.cs294s.$(owner)
 white_list = Restaurant,Review
 
 generate_flags = $(foreach v,$(synthetic_flags),--set-flag $(v)) --white-list $(white_list)
@@ -79,7 +79,7 @@ skill-package/meta.json: $(experiment)/schema.tt source-data/$(experiment)/*.jso
 	$(genie) webqa-normalize-data --meta-output $@ --thingpedia $(experiment)/schema.tt source-data/$(experiment)/*.json --class-name $(class_name)
 
 skill-package/package.json:
-	echo '{ "name":"$(class_name_prefix).$(class_name)", "author": [ "$(username) <$(username)@stanford.edu>" ], "license":"BSD-3-Clause", "main":"index.js" }' > skill-package/package.json
+	echo '{ "name":"$(class_name)", "author": [ "$(owner) <$(owner)@stanford.edu>" ], "license":"BSD-3-Clause", "main":"index.js" }' > skill-package/package.json
 
 skill-package.zip: skill-package/data.json skill-package/meta.json skill-package/index.js skill-package/package.json
 	zip -j $@ skill-package/*
