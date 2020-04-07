@@ -99,53 +99,53 @@ make restaurants/synthetic-d5.tsv
 ## Create Your Own Skill
 As we said, in this homework, you will work on a domain of your choice. 
 You can find all schema.org domains at [here](https://schema.org/docs/full.html). Do not choose `Restaurant`.
-Note that some schemas are more widely used than others. It might be hard to find some of the domains. 
-Two tricks to find websites of a certain domain: 
+Note that some schemas are more widely used than others. It might be hard to find web pages for some of the domains. 
+Two tricks to find websites for a certain domain: 
 - [Google Custom Search](https://cse.google.com/) allows you create a customized search engine which only search 
-for pages using a given schema.org types. 
+for pages using a given schema.org types.
 - [Google Structural Data Testing Tool](https://search.google.com/structured-data/testing-tool/) 
-can show you the schema.org types in given web page. 
+can show you the schema.org types used in a given web page. 
 
 We also provide you an example [crawler](scripts/data-crawler.py) to help you get data from websites.
-The example shows how you can crawl the data from Yelp. Install the following dependencies and run it. 
+The example shows how you can crawl data from Yelp. Install the dependencies and run it. 
 ```bash
-pip3 install extruct requests bs4 --user
+pip3 install extruct requests bs4
 python3 scripts/data-crawler.py
 ```
-It will generate you `yelp.json`, which should look similar to what we provided under `source-data/restaurants/sample.json`.
+It will generate you a `yelp.json`, which should look similar to what we provided under `source-data/restaurants/sample.json`.
 
-Set the `init_url`, `base_url` to the websites you want to crawl accordingly.
+In the python script, set the `init_url`, `base_url` to the websites you want to crawl accordingly.
 Set `target_size` to be at least 100.  
-Note that difference website may have slight different structure, you might need to tweak the scripts a little bit to make it work. 
-Hopefully the comments in the code makes it simple to understand and easy to modify. 
+Note that different websites may have slight different structures, you might need to tweak the script to make it work. 
+Follow the comments in the code to modify it. 
 
-
-Once you decide your domain and collected the data for it, create a new directory under `source-data/`, and 
-put the collected data under that folder. 
+Once you decide your domain and collected data for it, create a new directory under `source-data/`, and 
+put the data under that folder. 
 Create a directory with the same name under `hw1`.
 
-To allow the `Makefile` working on your own skill. You will update it by changing the following fields:
+To allow the `Makefile` working on your own skill. You will need to update it by changing the following fields:
 
 - `experiment`: change it to the directory name you created for your data file;
 - `white_list`: change it the function you want to expose to the user. 
 
 Then you can run the same command as shown in the restaurant example (replace "restaurants" with your directory name) 
 to create your own QA skill.
+Make sure you check the synthetic datasets, and iterate the annotations before you move to the next step.
 
 
 ## Submit your device to Thingpedia
 Once you finished your `schema.tt` you can prepare your skill to upload to Thingpedia. 
 
-First you will need to upload all the string set and entities under `$(your-folder-name)/parameter-datasets/` to Thingpedia.
+First you will need to upload all the string and entity datasets under `$(your-folder-name)/parameter-datasets/` to Thingpedia.
 Normally you will need to upload it through a web interface ([https://almond.stanford.edu/thingpedia/strings]() and [https://almond.stanford.edu/thingpedia/entities]()). 
-But we have create a simple scripts for you to automatically upload all of them. 
+But we have create a simple script for you to automatically upload all of them. 
 Simply run
 ```bash
 make upload-datasets
 ```
 Check the Thingpedia [string dataset page](https://almond.stanford.edu/thingpedia/strings) 
-and [entity dataset page](https://almond.stanford.edu/thingpedia/entities).
-Make sure the datasets are successfully uploaded.
+and [entity dataset page](https://almond.stanford.edu/thingpedia/entities)
+to make sure the datasets are successfully uploaded.
 
 After uploading all the datasets, you can now upload your skill. 
 Run the following command to pack your skill in a zip file.  
