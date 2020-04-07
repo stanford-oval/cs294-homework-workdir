@@ -85,15 +85,8 @@ skill-package.zip: skill-package/data.json skill-package/meta.json skill-package
 	zip -j $@ skill-package/*
 
 
-upload-datasets: $(experiment)/parameter-datasets/*.tsv
-	for file in $(experiment)/parameter-datasets/*.tsv ; do \
-		fname=$$(basename $${file}) ; \
-		$(thingpedia) --url https://almond.stanford.edu/thingpedia --developer-key $(developer_key) --access-token $(access_token) upload-string-values --preprocessed --type-name $${fname%.*} --name $${fname%.*} $${file}; \
-	done
-	for file in $(experiment)/parameter-datasets/*.json ; do \
-		fname=$$(basename $${file}) ; \
-		$(thingpedia) --url https://almond.stanford.edu/thingpedia --developer-key $(developer_key) --access-token $(access_token) upload-entity-values --entity-id $${fname%.*} --entity-name $${fname%.*} --json $${file}; \
-	done
+upload-datasets: $(experiment)/parameter-datasets.tsv
+	node ./scripts/upload-datasets.js $(experiment) $(class_name) $(developer_key) $(access_token)
 
 upload-skill: skill-package.zip skill-package/icon.png emptydataset.tt $(experiment)/schema.tt
 	$(thingpedia) --url https://almond.stanford.edu/thingpedia --developer-key $(developer_key) --access-token $(access_token) \

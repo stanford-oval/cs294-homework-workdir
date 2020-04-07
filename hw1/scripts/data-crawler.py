@@ -37,7 +37,7 @@ from bs4 import BeautifulSoup
 
 init_url = 'https://www.yelp.com/search?find_desc=Restaurants&find_loc=stanford'
 base_url = 'https://www.yelp.com/'
-target_size = 1000
+target_size = 10
 
 
 def crawl(initial, url_pattern, schema_pattern, output, interval=0):
