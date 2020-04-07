@@ -1,5 +1,6 @@
 geniedir ?= 
 developer_key ?= 
+access_token ?=
 username ?=
 
 thingpedia ?= thingpedia
@@ -83,7 +84,19 @@ skill-package/package.json:
 skill-package.zip: skill-package/data.json skill-package/meta.json skill-package/index.js skill-package/package.json
 	zip -j $@ skill-package/*
 
+
+upload-datasets:
+	for file in $(experiment)/parameter-datasets/*.tsv ; do \
+		fname=$$(basename $${file}) ; \
+		$(thingpedia) --url https://almond.stanford.edu/thingpedia --developer-key $(developer_key) --access-token $(access_token) upload-string-values --preprocessed --type-name $${fname%.*} --name $${fname%.*} $${file}; \
+	done
+	for file in $(experiment)/parameter-datasets/*.json ; do \
+		fname=$$(basename $${file}) ; \
+		$(thingpedia) --url https://almond.stanford.edu/thingpedia --developer-key $(developer_key) --access-token $(access_token) upload-entity-values --entity-id $${fname%.*} --entity-name $${fname%.*} --json $${file}; \
+	done
+
 clean:
 	rm -rf $(experiment)/synthetic* $(experiment)/data.json $(experiment)/entities.json $(experiment)/parameter-datasets* $(experiment)/schema.org.tt $(experiment)/everything.tsv $(experiment)/constants.tsv
 	rm -rf skill-package/data.json skill-package/meta.json skill-package/package.json skill-package.zip
+
 
