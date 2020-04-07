@@ -82,6 +82,12 @@ Note that we only offer very basic heuristic to generate these annotations.
 So to improve the natural language for your skill, you need to tweak these annotations manually. 
 A full documentation of different annotation types can be found [here](instructions/nl-annotations.md).
 
+You can also update the `canonical` annotation of a function. By default, it's the same as the function name.
+However, this is not always suitable. For example, if you are building a 
+QA skill for dentists and scraping your data from Yelp. Yelp is not using `Dentist` class, instead, 
+they use `LocalBusiness`. In this case, you can replace the `canonical` annotation for function `LocalBusiness`
+to `dentist` in your `schema.tt`.
+
 You can run the following command to see what sentences will be generated with your canonical annotations.
 Iterate your annotations until you are happy with you synthetic data. (Note that synthetic data won't be 
 perfect, try to have as many variety as possible.)
@@ -94,45 +100,85 @@ make restaurants/synthetic-d5.tsv
 As we said, in this homework, you will work on a domain of your choice. 
 You can find all schema.org domains at [here](https://schema.org/docs/full.html). Do not choose `Restaurant`.
 Note that some schemas are more widely used than others. It might be hard to find some of the domains. 
-To identify schema.org data in web pages. You can use this [tool from Google](https://search.google.com/structured-data/testing-tool/).
+Two tricks to find websites of a certain domain: 
+- [Google Custom Search](https://cse.google.com/) allows you create a customized search engine which only search 
+for pages using a given schema.org types. 
+- [Google Structural Data Testing Tool](https://search.google.com/structured-data/testing-tool/) 
+can show you the schema.org types in given web page. 
 
-We also provide you an example [crawler](data-crawler/crawler.py) to help you get data from websites.
-The example shows how you can crawl the data from Yelp. Set the `init_url` and `base_url` to the websites you want to crawl accordingly. 
+We also provide you an example [crawler](scripts/data-crawler.py) to help you get data from websites.
+The example shows how you can crawl the data from Yelp. Install the following dependencies and run it. 
+```bash
+pip3 install extruct requests bs4 --user
+python3 scripts/data-crawler.py
+```
+It will generate you `yelp.json`, which should look similar to what we provided under `source-data/restaurants/sample.json`.
+
+Set the `init_url`, `base_url` to the websites you want to crawl accordingly.
+Set `target_size` to be at least 100.  
 Note that difference website may have slight different structure, you might need to tweak the scripts a little bit to make it work. 
 Hopefully the comments in the code makes it simple to understand and easy to modify. 
 
-Once you decide your domain and collected the data for it, You can update the 
-`Makefile`: change `experiment` to the folder name you created for your data file;
-change `class_name` to the domain name in [schema.org](https://schema.org);
-and set `white_list` to the table names in `schema.tt` you would like query about.
 
-Then you can run the same command as shown in the restaurant example to create your own QA skill.
+Once you decide your domain and collected the data for it, create a new directory under `source-data/`, and 
+put the collected data under that folder. 
+Create a directory with the same name under `hw1`.
+
+To allow the `Makefile` working on your own skill. You will update it by changing the following fields:
+
+- `experiment`: change it to the directory name you created for your data file;
+- `white_list`: change it the function you want to expose to the user. 
+
+Then you can run the same command as shown in the restaurant example (replace "restaurants" with your directory name) 
+to create your own QA skill.
 
 
 ## Submit your device to Thingpedia
 Once you finished your `schema.tt` you can prepare your skill to upload to Thingpedia. 
 
 First you will need to upload all the string set and entities under `$(your-folder-name)/parameter-datasets/` to Thingpedia.
-You can find the portal to upload them at [https://almond.stanford.edu/thingpedia/strings]() and [https://almond.stanford.edu/thingpedia/entities](). 
-(we probably should recommend using command line tool for uploading?)
+Normally you will need to upload it through a web interface ([https://almond.stanford.edu/thingpedia/strings]() and [https://almond.stanford.edu/thingpedia/entities]()). 
+But we have create a simple scripts for you to automatically upload all of them. 
+Simply run
+```bash
+make upload-datasets
+```
+Check the Thingpedia [string dataset page](https://almond.stanford.edu/thingpedia/strings) 
+and [entity dataset page](https://almond.stanford.edu/thingpedia/entities).
+Make sure the datasets are successfully uploaded.
 
-Then, you can upload your skill. To do so, simply run 
+After uploading all the datasets, you can now upload your skill. 
+Run the following command to pack your skill in a zip file.  
 ```bash
 make skill-library.zip
 ```
-Then fill in the metadata of your skill, upload the zip file, upload an icon you like,
-copy your `schema.tt`, and `emptydataset.tt` to the online editor, then click "create".
+
+Go to [Thingpedia skill creation page](https://almond.stanford.edu/thingpedia/upload/create).
+Put in the metadata: 
+- ID: the same as the one in `schema.tt` (should be in the form of `edu.stanford.cs294s.$(student-name-or-group-name)`)
+- Name: a short name for your skill
+- Description: describe your skill in a couple of sentences
+- Category: choose "Media"
+- License: MIT
+- Check the box for "This license is GPL compatible"
+- Leave website, source code repository, issue tracker empty
+- Icon: choose a png file as the icon of your skill
+- Zipfile: the `skill-library.zip` generated.
+
+Copy your `schema.tt` to `manifest.tt`;
+copy `emptydataset.tt` to `dataset.tt`;
+Then click "create".
 
 Once you skill is submitted, we will train the natural language overnight, but you can test it with ThingTalk directly. 
-For example, type the following command in web almond to return all data you collected (replace `Restaurant` with you class name):
+For example, type the following command in web almond to return all data you collected
+(replace `xxx` with `owner`, `Restaurant` with your function name):
 ```
-\t now => @org.schema.Restaurant.Restaurant() => notify;
+\t now => @edu.stanford.cs294.xxx.Restaurant() => notify;
 ```
 
 
 ## Homework submission
-Submit a simple text file to include the following information:
-
+Submit a simple text file to TA, and include the following information:
 - A link to a private fork of the this repository containing the data you collected and `schema.tt` you generated and tuned.
 - The domain you choose
 - The website you use to collect your data

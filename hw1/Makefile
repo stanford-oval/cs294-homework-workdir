@@ -8,15 +8,13 @@ memsize := $(shell echo $$(($$(grep MemTotal /proc/meminfo | sed 's/[^0-9]//g')/
 genie = node --experimental_worker --max_old_space_size=$(memsize) $(geniedir)/tool/genie.js
 
 experiment ?= restaurants
+white_list = Restaurant,Review
+class_name = edu.stanford.cs294s.$(owner)
 
 template_file ?= thingtalk/en/thingtalk.genie
 dataset_file ?= emptydataset.tt
 
 synthetic_flags ?= projection_with_filter projection aggregation schema_org filter_join multifilter multifilters no_stream
-
-class_name = edu.stanford.cs294s.$(owner)
-white_list = Restaurant,Review
-
 generate_flags = $(foreach v,$(synthetic_flags),--set-flag $(v)) --white-list $(white_list)
 
 $(experiment)/schema.org.tt: $(geniedir)/tool/webqa-process-schemaorg.js
