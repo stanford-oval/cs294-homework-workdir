@@ -39,6 +39,10 @@ If encounter `command not found`, make sure the Yarn global bin directory
 (usually `~/.yarn/bin`) is in your PATH. You can find the path with the command
 `yarn global bin`.
 
+```bash
+export PATH=~/.yarn/bin:$PATH
+```
+
 
 ## Configuration 
 
