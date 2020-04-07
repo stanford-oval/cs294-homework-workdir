@@ -4,7 +4,7 @@ access_token ?=
 owner ?=
 
 thingpedia ?= thingpedia
-memsize := $(shell echo $$(($$(grep MemTotal /proc/meminfo | sed 's/[^0-9]//g')/1000-2500)))
+memsize := 3072
 genie = node --experimental_worker --max_old_space_size=$(memsize) $(geniedir)/tool/genie.js
 
 experiment ?= restaurants
