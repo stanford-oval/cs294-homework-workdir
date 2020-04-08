@@ -14,6 +14,9 @@ In addition, you will need 3 libraries from OVAL:
 [genie-toolkit](https://github.com/stanford-oval/genie-toolkit), 
 [almond-tokenizer](https://github.com/stanford-oval/almond-tokenizer),
 and [thingpedia-cli](https://github.com/stanford-oval/thingpedia-cli). 
+`genie-toolkit` provides you tools to process schema.org data, generate manifest, and synthesize data. 
+`thingpedia-cli` provides easy way to download data from and upload data to Thingpedia. 
+`almond-tokenizer` serves as a fast local tokenizer to handle the raw data you will collect. 
 
 Run the following command to install them: 
 ```bash
@@ -55,7 +58,8 @@ Follow this simple [instruction](instructions/almond-registration.md) to registe
 and get your developer key. 
 - `access_token`: set this to your access token in Thingpedia. 
 Again, see this [instruction](instructions/almond-registration.md) for where to find it.
-- `owner`: set this either your sid, or your group name (letter, numbers, and `.` only; no space)
+- `owner`: set this either your sid, or your group name (letter, numbers, and `.` only; no space). 
+This is used to name your device automatically, so we won't have conflicts among homeworks.
 
 We also suggest that you to follow at least one of the [tutorials](https://almond.stanford.edu/doc/thingpedia-tutorial-hello-world.md) 
 to learn the basics of Thingpedia skill development.
@@ -72,14 +76,26 @@ LANGUAGES=en ./run.sh
 This work directory comes with a sample data for restaurants: [`./source-data/restaurants/sample.json`](source-data/restaurants/sample.json). 
 It is similar to what you can crawl from yelp.com pages, which contain schema.org markups in the form of [`json-ld`](https://en.wikipedia.org/wiki/JSON-LD).
 
+### Generate Manifest and Value Datasets
 With this sample data you can simply run the following two commands under `hw1` directory to 
-get a manifest, and a set of value datasets for your skill.
+get a base manifest and a set of value datasets for your skill.
 
 ```bash
 make restaurants/schema.tt
 make restaurants/parameter-datasets.tsv
 ```
 
+The first command, will call 3 commands `process-schemaorg`, `normalize-data`, `trim-class` in Genie. 
+It takes the source data and check with the schema.org ontology (in `schema.jsonld`), and produce a Thingpedia manifest
+that only contains the subset of classes and properties in schema.org that are used in your source data. 
+The result manifest is stored in `schema.tt`.
+
+The second command will generate a `parameter-datasets` folder under `restaurants`, which contains the values 
+for each property in source data. This will be used by Genie to generate natural sentence with real values. 
+It also creates `parameter-datasets.tsv` that provides an index for the datasets. 
+
+
+### Iterate Natural Language Annotations
 The `schema.tt` contains the function signature of your skill. Each function has a list of parameters, and
 each parameters has one or more canonical annotations. 
 Note that we only offer very basic heuristics to automatically generate these annotations.
@@ -92,7 +108,11 @@ QA skill for dentists and scraping your data from Yelp. Yelp is not using `Denti
 they use `LocalBusiness`. In this case, you can replace the `canonical` annotation for function `LocalBusiness`
 to `dentist` in your `schema.tt`.
 
-You can run the following command to see what sentences will be generated with your canonical annotations.
+You can use Thingpedia website to edit the `schema.tt`. In the [device creation page](https://almond.stanford.edu/thingpedia/upload/create),
+`manifest.tt` tab provides an online editor - including syntax highlighting, syntax error warning, which 
+you might find helpful. 
+
+After tweaking the annotations, you can run the following command to see what sentences will be generated with your canonical annotations.
 Iterate your annotations until you are happy with you synthetic data. (Note that synthetic data won't be 
 perfect, try to have as many variety as possible.)
 ```bash
@@ -179,6 +199,15 @@ For example, type the following command in web almond to return all data you col
 ```
 \t now => @edu.stanford.cs294.xxx.Restaurant() => notify;
 ```
+
+You might notice the output looks terrible with one property at a time. 
+You can actually define how the result should be formatted with annotation. 
+For example, restaurant function can have the following annotation to display one sentence
+to describe each restaurant.
+```
+#_[formatted=["${id}: ${aggregateRating.ratingValue} star ${servesCuisine} restaurant"]]
+```.
+See this [instruction](https://almond.stanford.edu/doc/thingpedia-nl-support.md#output-format) for more details.
 
 
 ## Homework submission
