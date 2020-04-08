@@ -206,7 +206,7 @@ For example, restaurant function can have the following annotation to display on
 to describe each restaurant.
 ```
 #_[formatted=["${id}: ${aggregateRating.ratingValue} star ${servesCuisine} restaurant"]]
-```.
+```
 See this [instruction](https://almond.stanford.edu/doc/thingpedia-nl-support.md#output-format) for more details.
 
 
