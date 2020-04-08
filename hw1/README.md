@@ -39,7 +39,7 @@ You also need a local tokenizer for process raw data.
 Run the following docker to deploy that. Make sure tokenizer is running when you do this homework.
 ```bash
 # first time
-docker run --name tokenizer -p 8888:8888 -e LANGUAGES=en stanfordoval/almont-tokenizer:latest
+docker run --name tokenizer -p 8888:8888 -e LANGUAGES=en stanfordoval/almond-tokenizer:latest
 # the next time 
 docker start tokenizer
 ```
