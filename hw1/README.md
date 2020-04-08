@@ -200,7 +200,7 @@ For example, type the following command in web almond to return all data you col
 \t now => @edu.stanford.cs294.xxx.Restaurant() => notify;
 ```
 
-You might notice the output looks terrible with one property at a time. 
+(Optional) You might notice the output looks terrible with one property at a time. 
 You can actually define how the result should be formatted with annotation. 
 For example, restaurant function can have the following annotation to display one sentence
 to describe each restaurant.
