@@ -4,9 +4,12 @@ a domain of your choice using schema.org data from websites.
 This workdir provides you a `Makefile` to help you run the scripts needed, as 
 well as an example QA skill for the restaurant domain.
 
+(The scripts have been tested on Fedora, Ubuntu, and Mac. Windows users can use 
+[WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10), but a linux VM is recommended.)
+
 ## Install dependencies
-This homework requires `nodejs` (>=10.0), and `yarn` as a package manager. 
-See [nodejs](https://nodejs.org/en/download/) and [yarn](https://classic.yarnpkg.com/en/docs/install/) for installation details. 
+This homework requires `docker`, `nodejs` (>=10.0), and `yarn` as a package manager. 
+See [docker](https://docs.docker.com/get-docker/), [nodejs](https://nodejs.org/en/download/) and [yarn](https://classic.yarnpkg.com/en/docs/install/) for installation details. 
 You can check your installation by running `node --version` and `yarn --version`.
 
 In addition, you will need 2 libraries from OVAL: 
@@ -44,6 +47,18 @@ docker run --name tokenizer -p 8888:8888 -e LANGUAGES=en stanfordoval/almond-tok
 docker start tokenizer
 ```
 
+If you are using Windows WSL, it might be painful to use docker. 
+Instead you can run your tokenizer as follows:
+```bash
+# install almond-tokenizer
+git clone https://github.com/stanford-oval/almond-tokenizer.git
+cd almond-tokenizer
+./pull-dependencies.sh # This will download ~2 GB data
+JAVAHOME=$(path-to-java) ant
+# e.g., JAVAHOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64 ant
+
+LANGUAGES=en ./run.sh
+```
 
 ## Configuration 
 
