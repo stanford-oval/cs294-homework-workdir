@@ -87,16 +87,15 @@ This describes the property in the form of a passive verb phrase.
 
 
 ```js
-out alumniOf: Entity(org.schema:Organization)
+out worksFor: Entity(org.schema:Organization)
 #_[canonical = {
-    passive_verb = ["graduated from #"]
+    passive_verb = ["employed by #"]
 }]
 
-"Who is graduated from Stanford University?"
-"Show me a person that is graduated from Stanford."
+"Who is employed by Stanford University?"
+"Show me a person employed from Stanford."
 ```
 
-Note that in the example of `AlumniOf`, *verb* and *passive verb* has the same value, but they are used to generate different sentences (one with "is", one without). In most cases, they should be different. For example, `worksFor` has *verb* annotation "works for #", *passive verb* annotation "employed by #".
 
 ## Adjective 
 **Adjective** (`adjective`)
