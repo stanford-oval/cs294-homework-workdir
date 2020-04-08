@@ -5,18 +5,15 @@ This workdir provides you a `Makefile` to help you run the scripts needed, as
 well as an example QA skill for the restaurant domain.
 
 ## Install dependencies
-This homework requires `java (JDK)` (==1.11), Apache Ant, `nodejs` (>=10.0), and `yarn` as a package manager. 
-Follow the guide from their websites to install them on your local machine. 
+This homework requires `nodejs` (>=10.0), and `yarn` as a package manager. 
 See [nodejs](https://nodejs.org/en/download/) and [yarn](https://classic.yarnpkg.com/en/docs/install/) for installation details. 
-You can check your installation by running `javac -version`, `ant -version`, `node --version` and `yarn --version`.
+You can check your installation by running `node --version` and `yarn --version`.
 
-In addition, you will need 3 libraries from OVAL: 
+In addition, you will need 2 libraries from OVAL: 
 [genie-toolkit](https://github.com/stanford-oval/genie-toolkit), 
-[almond-tokenizer](https://github.com/stanford-oval/almond-tokenizer),
-and [thingpedia-cli](https://github.com/stanford-oval/thingpedia-cli). 
+[almond-tokenizer](https://github.com/stanford-oval/almond-tokenizer).
 `genie-toolkit` provides you tools to process schema.org data, generate manifest, and synthesize data. 
 `thingpedia-cli` provides easy way to download data from and upload data to Thingpedia. 
-`almond-tokenizer` serves as a fast local tokenizer to handle the raw data you will collect. 
 
 Run the following command to install them: 
 ```bash
@@ -24,14 +21,6 @@ Run the following command to install them:
 git clone https://github.com/stanford-oval/genie-toolkit.git
 cd genie-toolkit
 yarn
-cd ..
-
-# install almond-tokenizer
-git clone https://github.com/stanford-oval/almond-tokenizer.git
-cd almond-tokenizer
-./pull-dependencies.sh # This will download ~2 GB data
-JAVAHOME=$(path-to-java) ant
-# e.g., JAVAHOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64 ant
 
 # install thingpedia-cli 
 yarn global add thingpedia-cli
@@ -44,6 +33,15 @@ If encounter `command not found`, make sure the Yarn global bin directory
 
 ```bash
 export PATH=~/.yarn/bin:$PATH
+```
+
+You also need a local tokenizer for process raw data. 
+Run the following docker to deploy that. Make sure tokenizer is running when you do this homework.
+```bash
+# first time
+docker run --name tokenizer -p 8888:8888 -e LANGUAGES=en stanfordoval/almont-tokenizer:latest
+# the next time 
+docker start tokenizer
 ```
 
 
@@ -64,12 +62,6 @@ This is used to name your device automatically, so we won't have conflicts among
 We also suggest that you to follow at least one of the [tutorials](https://almond.stanford.edu/doc/thingpedia-tutorial-hello-world.md) 
 to learn the basics of Thingpedia skill development.
 
-
-Before you move forward, make sure you keep your tokenizer running in the background: 
-go to `almond-tokenizer` directory and run
-```bash
-LANGUAGES=en ./run.sh
-```
 
 
 ## An Example QA Skill: Restaurant
@@ -182,7 +174,7 @@ Put in the metadata:
 - ID: the same as the one in `schema.tt` (should be in the form of `edu.stanford.cs294s.$(student-name-or-group-name)`)
 - Name: a short name for your skill
 - Description: describe your skill in a couple of sentences
-- Category: choose "Media"
+- Category: choose "Service"
 - License: MIT
 - Check the box for "This license is GPL compatible"
 - Leave website, source code repository, issue tracker empty
@@ -199,6 +191,7 @@ For example, type the following command in web almond to return all data you col
 ```
 \t now => @edu.stanford.cs294.xxx.Restaurant() => notify;
 ```
+Here `\t` indicates the system that this is a raw ThingTalk command, not natural language.
 
 (Optional) You might notice the output looks terrible with one property at a time. 
 You can actually define how the result should be formatted with annotation. 
