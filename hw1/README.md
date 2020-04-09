@@ -162,10 +162,10 @@ Note that different websites may have slight different structures, you might nee
 Follow the comments in the code to modify it. 
 
 Here is a list of example domains
-- Hotel [hotels.com]()
-- Housing (SingleFamilyResidence) [zillow.com]()
-- Product [ebay.com]()
-- Recipes [allrecipes.com]()
+- Hotel [hotels.com](https://hotels.com)
+- Housing (SingleFamilyResidence) [zillow.com](https://zillow.com)
+- Product [ebay.com](https://ebay.com)
+- Recipes [allrecipes.com](https://allrecipes.com)
 
 Once you have decided on your domain and collected data for it, create a new directory under `source-data/`, and 
 put the data under that folder. Use only alphanumeric characters for this directory, without any special character (including `_` or `-`).
