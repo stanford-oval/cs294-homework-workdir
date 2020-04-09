@@ -12,9 +12,10 @@ This homework requires `docker`, `nodejs` (>=10.0), and `yarn` as a package mana
 See [docker](https://docs.docker.com/get-docker/), [nodejs](https://nodejs.org/en/download/) and [yarn](https://classic.yarnpkg.com/en/docs/install/) for installation details. 
 You can check your installation by running `node --version` and `yarn --version`.
 
-In addition, you will need 2 libraries from OVAL: 
+In addition, you will need 3 libraries from OVAL: 
 [genie-toolkit](https://github.com/stanford-oval/genie-toolkit), 
-[almond-tokenizer](https://github.com/stanford-oval/almond-tokenizer).
+[almond-tokenizer](https://github.com/stanford-oval/almond-tokenizer),
+[thingpedia-cli](https://github.com/stanford-oval/thingpedia-cli).
 `genie-toolkit` provides you tools to process schema.org data, generate manifest, and synthesize data. 
 `thingpedia-cli` provides easy way to download data from and upload data to Thingpedia. 
 
@@ -65,13 +66,13 @@ LANGUAGES=en ./run.sh
 This workdir comes with a `Makefile` to help you run the scripts needed to build 
 the QA skill. You will need to configure the following fields in the [`Makefile`](Makefile):
 
-- `geniedir`: set this to the absolute path of where `genie-toolkie` is installed.
+- `geniedir`: set this to the absolute path of where `genie-toolkit` is installed.
 - `developer_key`: set this to your own developer key in Thingpedia. 
-Follow this simple [instruction](instructions/almond-registration.md) to register as a Thingpedia developer, 
+Follow these [instructions](instructions/almond-registration.md) to register as a Thingpedia developer, 
 and get your developer key. 
 - `access_token`: set this to your access token in Thingpedia. 
-Again, see this [instruction](instructions/almond-registration.md) for where to find it.
-- `owner`: set this either your sid, or your group name (letter, numbers, and `.` only; no space). 
+Again, see the [instructions](instructions/almond-registration.md) for where to find it.
+- `owner`: set this either your sunetID, or your group name (letter, numbers, and `-` only; no spaces). 
 This is used to name your device automatically, so we won't have conflicts among homeworks.
 
 We also suggest that you to follow at least one of the [tutorials](https://almond.stanford.edu/doc/thingpedia-tutorial-hello-world.md) 
@@ -80,11 +81,11 @@ to learn the basics of Thingpedia skill development.
 
 
 ## An Example QA Skill: Restaurant
-This work directory comes with a sample data for restaurants: [`./source-data/restaurants/sample.json`](source-data/restaurants/sample.json). 
+This work directory comes with sample data for restaurants: [`./source-data/restaurants/sample.json`](source-data/restaurants/sample.json). 
 It is similar to what you can crawl from yelp.com pages, which contain schema.org markups in the form of [`json-ld`](https://en.wikipedia.org/wiki/JSON-LD).
 
 ### Generate Manifest and Value Datasets
-With this sample data you can simply run the following two commands under `hw1` directory to 
+With this sample data you can run the following two commands under `hw1` directory to 
 get a base manifest and a set of value datasets for your skill.
 
 ```bash
@@ -93,7 +94,7 @@ make restaurants/parameter-datasets.tsv
 ```
 
 The first command, will call 3 commands `process-schemaorg`, `normalize-data`, `trim-class` in Genie. 
-It takes the source data and check with the schema.org ontology (in `schema.jsonld`), and produce a Thingpedia manifest
+It takes the source data, checks the schema.org ontology (in `schema.jsonld`), and produces a Thingpedia manifest
 that only contains the subset of classes and properties in schema.org that are used in your source data. 
 The result manifest is stored in `schema.tt`.
 
@@ -107,34 +108,37 @@ The `schema.tt` contains the function signature of your skill. Each function has
 each parameters has one or more canonical annotations. 
 Note that we only offer very basic heuristics to automatically generate these annotations.
 Therefore, to improve the natural language part for your skill, you need to tweak these annotations manually. 
-A full documentation of different annotation types can be found [here](instructions/nl-annotations.md).
+A full documentation of the different annotation types can be found [here](instructions/nl-annotations.md).
+
+NOTE: **all** natural language annotations must be lower case.
 
 You can also update the `canonical` annotation of a function. By default, it's the same as the function name.
 However, this is not always suitable. For example, if you are building a 
-QA skill for dentists and scraping your data from Yelp. Yelp is not using `Dentist` class, instead, 
+QA skill for dentists and scraping your data from Yelp. Yelp is not using the `Dentist` class, instead, 
 they use `LocalBusiness`. In this case, you can replace the `canonical` annotation for function `LocalBusiness`
 to `dentist` in your `schema.tt`.
 
 You can use Thingpedia website to edit the `schema.tt`. In the [device creation page](https://almond.stanford.edu/thingpedia/upload/create),
 `manifest.tt` tab provides an online editor - including syntax highlighting, syntax error warning, which 
-you might find helpful. 
+you might find helpful.
 
 After tweaking the annotations, you can run the following command to see what sentences will be generated with your canonical annotations.
-Iterate your annotations until you are happy with you synthetic data. (Note that synthetic data won't be 
-perfect, try to have as many variety as possible.)
+Iterate your annotations until you are happy with you synthetic data. Note that synthetic data won't be 
+perfect, so try to have as many variety as possible.
 ```bash
 make restaurants/synthetic-d5.tsv
 ```
 
+You can change `d5` to higher numbers (e.g. `d7`) to see sentences of different complexity (grammar derivation depth), at the cost of waiting longer. After you submit, your skill will generate the dataset at depth 7.
 
 ## Create Your Own Skill
 As we said, in this homework, you will work on a domain of your choice. 
-You can find all schema.org domains at [here](https://schema.org/docs/full.html). Do not choose `Restaurant`.
+You can find all schema.org domains at [here](https://schema.org/docs/full.html). Do not choose `Restaurant` or `FoodEstablishment`.
 Note that some schemas are more widely used than others. It might be hard to find web pages for some of the domains. 
 Two tricks to find websites for a certain domain: 
 - [Google Custom Search](https://cse.google.com/) allows you create a customized search engine which only search 
 for pages using a given schema.org types.
-- [Google Structural Data Testing Tool](https://search.google.com/structured-data/testing-tool/) 
+- [Google Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) 
 can show you the schema.org types used in a given web page. 
 
 We also provide you an example [crawler](scripts/data-crawler.py) to help you get data from websites.
@@ -150,8 +154,8 @@ Set `target_size` to be at least 100.
 Note that different websites may have slight different structures, you might need to tweak the script to make it work. 
 Follow the comments in the code to modify it. 
 
-Once you decide your domain and collected data for it, create a new directory under `source-data/`, and 
-put the data under that folder. 
+Once you have decided on your domain and collected data for it, create a new directory under `source-data/`, and 
+put the data under that folder. Use only alphanumeric characters for this directory, without any special character (including `_` or `-`).
 Create a directory with the same name under `hw1`.
 
 To allow the `Makefile` working on your own skill. You will need to update it by changing the following fields:
