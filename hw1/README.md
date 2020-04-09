@@ -161,6 +161,12 @@ Set `target_size` to be at least 100.
 Note that different websites may have slight different structures, you might need to tweak the script to make it work. 
 Follow the comments in the code to modify it. 
 
+Here is a list of example domains
+- Hotel [hotels.com]()
+- Housing (SingleFamilyResidence) [zillow.com]()
+- Product [ebay.com]()
+- Recipes [allrecipes.com]()
+
 Once you have decided on your domain and collected data for it, create a new directory under `source-data/`, and 
 put the data under that folder. Use only alphanumeric characters for this directory, without any special character (including `_` or `-`).
 Create a directory with the same name under `hw1`.
