@@ -122,6 +122,13 @@ You can use Thingpedia website to edit the `schema.tt`. In the [device creation 
 `manifest.tt` tab provides an online editor - including syntax highlighting, syntax error warning, which 
 you might find helpful.
 
+<!--
+You can also use the CLI to check for mistakes:
+```
+thingpedia lint-device --manifest restaurant/schema.tt --dataset restaurant/schema.tt
+```
+-->
+
 After tweaking the annotations, you can run the following command to see what sentences will be generated with your canonical annotations.
 Iterate your annotations until you are happy with you synthetic data. Note that synthetic data won't be 
 perfect, so try to have as many variety as possible.
@@ -168,13 +175,42 @@ to create your own QA skill.
 Make sure you check the synthetic datasets, and iterate the annotations before you move to the next step.
 
 
-## Submit your device to Thingpedia
-Once you finished your `schema.tt` you can prepare your skill to upload to Thingpedia. 
+## Submit your skill to Thingpedia
+Once you finished your `schema.tt` you can prepare your skill to upload to Thingpedia.
 
-First you will need to upload all the string and entity datasets under `$(your-folder-name)/parameter-datasets/` to Thingpedia.
+NOTE: In Thingpedia parlance, a skill is called a "device", and this is reflected in CLI and in URLs.
+
+First, you will need to upload a "dummy" empty skill. Doing so will let you "take ownership" of the skill ID, and will let you upload the string and entity datasets.
+
+Go to [Thingpedia skill creation page](https://almond.stanford.edu/thingpedia/upload/create), which you can find from your [Developer Console](https://almond.stanford.edu/developers).
+Put in the metadata: 
+- ID: the same as the one in `schema.tt` (should be in the form of `edu.stanford.cs294s.$(student-name-or-group-name)`)
+- Name: a short name for your skill, which is also optionally used to call your skill from Almond (to resolve ambiguity)
+- Description: describe your skill in a couple of sentences
+- Category: choose "Service" (or an appropriate category for your domain)
+- License: MIT
+- Check the box for "This license is GPL compatible"
+- Leave website, source code repository, issue tracker empty
+- Icon: choose a png file as the icon of your skill
+- Zipfile: leave empty for now.
+- On the `manifest.tt` tab, enter:
+  ```
+  class @edu.stanford.cs294s.<student-name-or-group-name> {
+     import loader from @org.thingpedia.generic_rest();
+     import config from @org.thingpedia.config.none();
+  }
+  ```
+- On the `dataset.tt` tab, enter:
+  ```
+  dataset @edu.stanford.cs294s.<student-name-or-group-name> {}
+  ```
+
+Click "Create" at the top and go back to your developer console.
+
+Then you will need to upload all the string and entity datasets under `$(your-folder-name)/parameter-datasets/` to Thingpedia.
 Normally you will need to upload it through a web interface ([https://almond.stanford.edu/thingpedia/strings]() and [https://almond.stanford.edu/thingpedia/entities]()). 
-But we have create a simple script for you to automatically upload all of them. 
-Simply run
+But we have a script for you to automatically upload all of them. 
+Run
 ```bash
 make upload-datasets
 ```
@@ -182,27 +218,15 @@ Check the Thingpedia [string dataset page](https://almond.stanford.edu/thingpedi
 and [entity dataset page](https://almond.stanford.edu/thingpedia/entities)
 to make sure the datasets are successfully uploaded.
 
-After uploading all the datasets, you can now upload your skill. 
+After uploading all the datasets, you can now upload the real version of your skill. 
 Run the following command to pack your skill in a zip file.  
 ```bash
 make skill-library.zip
 ```
 
-Go to [Thingpedia skill creation page](https://almond.stanford.edu/thingpedia/upload/create).
-Put in the metadata: 
-- ID: the same as the one in `schema.tt` (should be in the form of `edu.stanford.cs294s.$(student-name-or-group-name)`)
-- Name: a short name for your skill
-- Description: describe your skill in a couple of sentences
-- Category: choose "Service"
-- License: MIT
-- Check the box for "This license is GPL compatible"
-- Leave website, source code repository, issue tracker empty
-- Icon: choose a png file as the icon of your skill
-- Zipfile: the `skill-library.zip` generated.
-
-Copy your `schema.tt` to `manifest.tt`;
-copy `emptydataset.tt` to `dataset.tt`;
-Then click "create".
+Then go to your developer console, and click "Update" next to the previously uploaded skill.
+Upload the just generate zip file in the "Zipfile" field, and copy the real `schema.tt` to `manifest.tt`.
+Then click "Save" at top.
 
 Once you skill is submitted, we will train the natural language overnight, but you can test it with ThingTalk directly. 
 For example, type the following command in web almond to return all data you collected
@@ -213,19 +237,19 @@ For example, type the following command in web almond to return all data you col
 Here `\t` indicates the system that this is a raw ThingTalk command, not natural language.
 
 (Optional) You might notice the output looks terrible with one property at a time. 
-You can actually define how the result should be formatted with annotation. 
+You can actually define how the result should be formatted with an appropriate function annotation. 
 For example, restaurant function can have the following annotation to display one sentence
 to describe each restaurant.
 ```
 #_[formatted=["${id}: ${aggregateRating.ratingValue} star ${servesCuisine} restaurant"]]
 ```
-See this [instruction](https://almond.stanford.edu/doc/thingpedia-nl-support.md#output-format) for more details.
+See this [guide](https://almond.stanford.edu/doc/thingpedia-nl-support.md#output-format) for more details.
 
 
 ## Homework submission
 Submit a simple text file to TA, and include the following information:
-- A link to a private fork of the this repository containing the data you collected and `schema.tt` you generated and tuned.
-- The domain you choose
-- The website you use to collect your data
+- A link to a private fork of this repository containing the data you collected and `schema.tt` you generated and tuned.
+- The domain you chose
+- The website you used to collect your data
 - All the changes you made to the automatically generated `schema.tt`
 - A list of example questions that can be answered by your QA skill
