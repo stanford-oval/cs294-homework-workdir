@@ -141,31 +141,31 @@ You can change `d5` to higher numbers (e.g. `d7`) to see sentences of different 
 ## Create Your Own Skill
 As we said, in this homework, you will work on a domain of your choice. 
 You can find all schema.org domains at [here](https://schema.org/docs/full.html). Do not choose `Restaurant` or `FoodEstablishment`.
-Note that some schemas are more widely used than others. It might be hard to find web pages for some of the domains. 
+Note that some schemas are more widely used than others. It might be hard to find webpages for some of the domains. 
 Two tricks to find websites for a certain domain: 
 - [Google Custom Search](https://cse.google.com/) allows you create a customized search engine which only search 
 for pages using a given schema.org types.
 - [Google Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) 
-can show you the schema.org types used in a given web page. 
+can show you the schema.org types used in a given webpage.
 
-We also provide you an example [crawler](scripts/data-crawler.py) to help you get data from websites.
-The example shows how you can crawl data from Yelp. Install the dependencies and run it. 
-```bash
-pip3 install extruct requests bs4
-python3 scripts/data-crawler.py
-```
-It will generate you a `yelp.json`, which should look similar to what we provided under `source-data/restaurants/sample.json`.
-
-In the python script, set the `init_url`, `base_url` to the websites you want to crawl accordingly.
-Set `target_size` to be at least 100.  
-Note that different websites may have slight different structures, you might need to tweak the script to make it work. 
-Follow the comments in the code to modify it. 
-
-Here is a list of example domains
+If you have trouble finding a suitable webpage, you may select one from this list of example domains:
 - Hotel [hotels.com](https://hotels.com)
 - Housing (SingleFamilyResidence) [zillow.com](https://zillow.com)
 - Product [ebay.com](https://ebay.com)
 - Recipes [allrecipes.com](https://allrecipes.com)
+
+We also provide you a [crawler](scripts/data-crawler.py) to help you get data from websites.
+This example shows how you can crawl data from Yelp. Install the dependencies and run it. 
+```bash
+pip3 install extruct requests bs4
+python3 scripts/data-crawler.py
+```
+It will generate you `yelp.json`, which should look similar to what we provided under `source-data/restaurants/sample.json`.
+
+In the python script, set the `init_url` and `base_url` to the websites you want to crawl accordingly.
+Set `target_size` to be at least 100.  
+Note that different websites may have slightly different structures, so you might need to tweak the script to make it work. 
+Follow the comments in the code to modify it. 
 
 Once you have decided on your domain and collected data for it, create a new directory under `source-data/`, and 
 put the data under that folder. Use only alphanumeric characters for this directory, without any special character (including `_` or `-`).
