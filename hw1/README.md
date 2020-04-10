@@ -1,11 +1,11 @@
 # Homework 1
 In this homework, you will build a toy question answering (QA) skill for the Almond virtual assistant on 
-a domain of your choice using schema.org data from websites.
-This workdir provides you a `Makefile` to help you run the scripts needed, as 
+a domain of your choice using schema.org data from a website of your choice.
+This workdir provides you with a `Makefile` to help you run the scripts needed, as 
 well as an example QA skill for the restaurant domain.
 
 (The scripts have been tested on Fedora, Ubuntu, and Mac. Windows users can use 
-[WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10), but a linux VM is recommended.)
+[WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10), but using a Linux virtual machine is recommended.)
 
 ## Install dependencies
 This homework requires `docker`, `nodejs` (>=10.0), and `yarn` as a package manager. 
@@ -253,9 +253,10 @@ See this [guide](https://almond.stanford.edu/doc/thingpedia-nl-support.md#output
 
 
 ## Homework submission
-Submit a simple text file to TA, and include the following information:
-- A link to a private fork of this repository containing the data you collected and `schema.tt` you generated and tuned.
+All members of a group should submit the same text file on Canvas, and include the following information:
+- Name of the students in your group
+- A link to the private copy of this repository containing the data you collected and `schema.tt` you generated and tuned
 - The domain you chose
 - The website you used to collect your data
-- All the changes you made to the automatically generated `schema.tt`
+- A list of the changes you made to the automatically generated `schema.tt`
 - A list of example questions that can be answered by your QA skill
