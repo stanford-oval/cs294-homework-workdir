@@ -202,7 +202,7 @@ Put in the metadata:
 - On the `manifest.tt` tab, enter:
   ```
   class @edu.stanford.cs294s.<student-name-or-group-name> {
-     import loader from @org.thingpedia.generic_rest();
+     import loader from @org.thingpedia.generic_rest.v1();
      import config from @org.thingpedia.config.none();
   }
   ```
