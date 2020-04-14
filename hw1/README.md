@@ -150,7 +150,7 @@ can show you the schema.org types used in a given webpage.
 
 If you have trouble finding a suitable webpage, you may select one from this list of example domains:
 - Hotel [hotels.com](https://hotels.com)
-- Housing (SingleFamilyResidence) [zillow.com](https://zillow.com)
+- ~~Housing (SingleFamilyResidence) [zillow.com](https://zillow.com)~~ (according to Mehrad, they use recaptcha to prevent crawling)
 - Product [ebay.com](https://ebay.com)
 - Recipes [allrecipes.com](https://allrecipes.com)
 
