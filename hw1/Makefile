@@ -83,7 +83,7 @@ skill-package.zip: skill-package/data.json skill-package/meta.json skill-package
 	zip -j $@ skill-package/*
 
 
-upload-datasets: $(experiment)/parameter-datasets.tsv
+upload-datasets: $(experiment)/parameter-datasets.tsv skill-package/meta.json
 	node ./scripts/upload-datasets.js $(experiment) $(class_name) $(developer_key) $(access_token)
 
 upload-skill: skill-package.zip skill-package/icon.png emptydataset.tt $(experiment)/schema.tt
