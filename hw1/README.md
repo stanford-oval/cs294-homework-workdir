@@ -227,7 +227,7 @@ to make sure the datasets are successfully uploaded.
 After uploading all the datasets, you can now upload the real version of your skill. 
 Run the following command to pack your skill in a zip file.  
 ```bash
-make skill-library.zip
+make skill-package.zip
 ```
 
 Then go to your developer console, and click "Update" next to the previously uploaded skill.
