@@ -32,7 +32,7 @@ function uploadString(stringId, path) {
         stringId,
         path
     ];
-    const process = child_process.spawn(`thingpedia`, args);
+    const process = child_process.spawn(`thingpedia`, args, { stdio: 'inherit' });
 }
 
 function uploadEntity(entityId, path) {
@@ -56,7 +56,7 @@ function uploadEntity(entityId, path) {
     } else {
         args.push('--no-ner-support')
     }
-    const process = child_process.spawn(`thingpedia`, args);
+    const process = child_process.spawn(`thingpedia`, args, { stdio: 'inherit' });
 }
 
 
