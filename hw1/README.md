@@ -234,11 +234,12 @@ Then go to your developer console, and click "Update" next to the previously upl
 Upload the just generate zip file in the "Zipfile" field, and copy the real `schema.tt` to `manifest.tt`.
 Then click "Save" at top.
 
-Once you skill is submitted, we will train the natural language overnight, but you can test it with ThingTalk directly. 
+Once you skill is submitted, we will train the natural language overnight, but you can test it with ThingTalk directly.
+First, add your new device to your almond by selecting it from [this](https://almond.stanford.edu/me/devices/create) page.
 For example, type the following command in web almond to return all data you collected
 (replace `xxx` with `owner`, `Restaurant` with your function name):
 ```
-\t now => @edu.stanford.cs294.xxx.Restaurant() => notify;
+\t now => @edu.stanford.cs294s.xxx.Restaurant() => notify;
 ```
 Here `\t` indicates the system that this is a raw ThingTalk command, not natural language.
 
