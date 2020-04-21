@@ -1,0 +1,10 @@
+string	uk.ac.cam.multiwoz.Train:destination	shared-parameter-datasets/uk.ac.cam.multiwoz.Train:destination.tsv
+string	uk.ac.cam.multiwoz.Train:departure	shared-parameter-datasets/uk.ac.cam.multiwoz.Train:departure.tsv
+string	uk.ac.cam.multiwoz.Restaurant:food	shared-parameter-datasets/uk.ac.cam.multiwoz.Restaurant:food.tsv
+string	uk.ac.cam.multiwoz.Attraction:name	shared-parameter-datasets/uk.ac.cam.multiwoz.Attraction:name.tsv
+string	uk.ac.cam.multiwoz.Restaurant:name	shared-parameter-datasets/uk.ac.cam.multiwoz.Restaurant:name.tsv
+string	uk.ac.cam.multiwoz.Attraction:type	shared-parameter-datasets/uk.ac.cam.multiwoz.Attraction:type.tsv
+string	uk.ac.cam.multiwoz.Hospital:department	shared-parameter-datasets/uk.ac.cam.multiwoz.Hospital:department.tsv
+string	uk.ac.cam.multiwoz.Hotel:name	shared-parameter-datasets/uk.ac.cam.multiwoz.Hotel:name.tsv
+string	uk.ac.cam.multiwoz.Taxi:destination	shared-parameter-datasets/uk.ac.cam.multiwoz.Taxi:destination.tsv
+string	uk.ac.cam.multiwoz.Taxi:departure	shared-parameter-datasets/uk.ac.cam.multiwoz.Taxi:departure.tsv

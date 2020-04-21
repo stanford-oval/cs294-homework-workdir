@@ -1,6 +1,24 @@
-hw1/emptydataset.tt
+models
+datasets
+synthetic*.tsv
+train.tsv
+eval.tsv
+test.tsv
+node_modules
+.embeddings
+.data
 
+hw1/emptydataset.tt
 hw1/shared-parameter-datasets.tsv
 hw1/shared-parameter-datasets/*
+ 
+skill-package.zip
 
-hw1/skill-package.zip
+*~
+*.swp
+*.tmp
+
+config.mk
+project_config.mk
+.idea/
+.DS_Store
