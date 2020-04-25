@@ -1,9 +1,11 @@
 # CS249S/W 2020 Homework 2: Transaction Dialogues
 
 In this homework, you will build an interactive dialogue agent that performs a _transaction_, such as ordering food, booking an hotel, or choosing a movie to play.
-A transaction is defined as containing one or more _queries_, that define the database over which the transaction is performed, and an _action_, which executes the actual operation the user is trying to accomplish.
+A transaction is defined as containing one _query_, that defines the database over which the transaction is performed, and one or more _actions_, which execute the actual operation the user is trying to accomplish.
 
 To do this homework, you will use and learn the latest version of Genie. This is research code, which might have issues. Please do not hesitate to ask in the community forum if you need technical help.
+
+**Please start early and budget your time accordingly!** This homework requires generating a large dataset and training a large neural network. Simply running every command once will take about 11 hours.
 
 ### Running on Google Cloud Platform
 
@@ -147,7 +149,7 @@ After generation, you will have the following files:
 After you generated the dataset, train with:
 
 ```bash
-make -j experiment=restaurant model=mymodelname
+make -j train-user experiment=restaurant model=mymodelname
 ```
 
 The model name can be anything, as long as it is alphanumeric only. It is recommended to use a sequential name, e.g. `bert1`, `bert2`, etc. It is also recommended to save the training flags and accuracy in a spreadsheet. The model will be saved in `restaurant/models/mymodelname`.
@@ -163,9 +165,9 @@ In this part, you will built your own dialogue agent for a transaction in a doma
 
 The first step is to define the domain of discourse, that is, the database schema, the actions that we will perform on it, and the parameters those actions need. There can be multiple possible actions, for example a movie dialogue agent could offer to buy a ticket, or watch it on Netflix.
 
-You will start from the schema definition of Homework 1. First, create a new experiment folder next to `restaurant`, and edit the Makefile accordingly. Instructions on how to edit the Makefile are in the Makefile itself. Copy over the `schema.tt`, `entities.json` and `dataset.tt` from Homework 1 in the new directory.
+You will start from the schema definition of homework 1. First, create a new experiment folder next to `restaurant`, and edit the Makefile accordingly. Instructions on how to edit the Makefile are in the Makefile itself. Copy over the `schema.tt`, `entities.json` and `dataset.tt` from homework 1 in the new directory.
 
-Then, edit `schema.tt` and `dataset.tt` to include one or more actions. You should describe the input and output parameters of the action, using the appropriate type and annotations. The action must include at least one parameter with an `Entity()` type matching the kind of object returned by main query of your Homework 1 device. 
+Then, edit `schema.tt` and `dataset.tt` to include one or more actions. You should describe the input and output parameters of the action, using the appropriate type and annotations. The action must include at least one parameter with an `Entity()` type matching the kind of object returned by main query of your homework 1 device. 
 You will also need to add new dialogue-specific annotations to schema.tt. See [instructions/nl-annotations.md](instructions/nl-annotations.md) for the full list of required and optional annotations.
 
 For example, `restaurant/schema.tt`, we have the following action to reserve a restaurant:
@@ -233,22 +235,22 @@ thingpedia init-device <your-device-id>
 
 Remove the generated skeletons of `manifest.tt` and `dataset.tt`, and replace them with the real files (or a symlink) from step 1.
 
-The add the implementation. Copy over the `index.js`, `meta.json`, `data.json` files from the skill-package.zip you created in Homework 1.
+The add the implementation. Copy over the `index.js`, `meta.json`, `data.json` files from the skill-package.zip you created in homework 1.
 
 Then edit the index.js to include the implementation of the action, by adding a new method to the class. The method should be called `do_` followed by the action name. It will receive as input an object with properties named after the action input parameters. On success, it should return an object wiht properties named after the action output parameters. On failure, it should throw an exception with an appropriate error code. See [instructions/nl-annotations.md](instructions/nl-annotations.md) for a discussion of error handling.
 
-For example, if you want to add an action called `make_resversation` to the `index.js`, you can simply add the following lines at the end of the file: 
+For example, if you want to add an action called `make_reservation` to the `index.js`, you can add the following lines inside the main class: 
 ```js
-module.exports.prototype['do_make_reservation'] = async function({ param1, param2, ... }, env) {
+async do_make_reservation({ param1, param2, ... }, env) {
     // mock up code to make reservation ...
 }
 ```
 
-For this homework, you don't need to connect to a real API for your actions, simply mock it up. Refer to [devices/uk.ac.cam.multiwoz.Restaurant/index.js](devices/uk.ac.cam.multiwoz.Restaurant/index.js) as an example.
+For this homework, you don't need to connect to a real API for your actions, only mock it up. Refer to [devices/uk.ac.cam.multiwoz.Restaurant/index.js](devices/uk.ac.cam.multiwoz.Restaurant/index.js) as an example.
 
 ### Step 4: generate the dataset and train
 
-As before, you can now generate the dataset with `make -j datadir`, and train with `make -j train-user`. This time, you don't have a pretrained model, so you will need to train a model from scratch. **Budget your time accordingly!** Generating a dataset is about 6 hours on a very fast machine with a lot of RAM, and training is about 9 hours on a GPU machine with Nvidia V100. Use the provided Google Cloud credits to access such machines.
+As before, you can now generate the dataset with `make -j datadir`, and train with `make -j train-user`. This time, you don't have a pretrained model, so you will need to train a model from scratch. Generating a dataset takes about 6 hours on a very fast machine with a lot of RAM, and training takes about 5 hours on a machine with a Nvidia V100 GPU.
 
 ### Step 5: test, rinse, repeat
 
@@ -261,10 +263,16 @@ tensorboard --logdir $(experiment)/models # e.g., restaurant/models
 ```
 and navigate to <http://127.0.0.1:6006>. You will see several plots who describe various metrics through training. The "almond\_dialogue\_nlu/em" plot (in the "almond\_dialogue\_nlu" section) is the main accuracy metric.
 
-Your model should achieve higher than **95%** accuracy on the synthetic set.
+Your model should achieve higher than **95%** accuracy on the synthetic evaluation set.
 
-**Optionally**, you can write an evaluation set yourself and use `make evaluate`. See the restaurant example for the file format.
+**Optionally**, you can write a small evaluation set yourself and use `make evaluate`. See the restaurant example for the file format.
 
 ## Submission
 
-Your submission should include a complete dialogue agent for a new domain. Package the whole starter code and all generated files into a zip file or tarball, then upload it to Stanford Box. Email the link to the TA for grading.
+Your submission should include a complete dialogue agent for a new domain. Package the whole starter code and all generated files (datasets, trained models, etc.) into a zip file or tarball, then upload it to [Stanford Box](https://stanford.account.box.com/). If you have multiple trained models and multiple versions of your dataset for your domain, only submit the best one.
+
+All members of a group should submit the same text file on Canvas, and include the following information:
+  - Name of the students in your group
+  - A link to the uploaded file on Stanford box (make sure you choose "People in your company" when creating the shared link)
+  - One example dialogue that you had with your agent (the agent does NOT need to understand you at every turn)
+

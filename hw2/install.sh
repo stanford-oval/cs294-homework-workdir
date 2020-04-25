@@ -152,6 +152,7 @@ if ! test -d genienlp ; then
 	git clone https://github.com/stanford-oval/genienlp
 	pushd genienlp
 	${PIP} install --user -e .
+	${PIP} install tensorboard
 	popd
 fi
 
