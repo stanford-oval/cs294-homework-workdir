@@ -103,7 +103,7 @@ Your account by default has a quota of 0 GPUs. You have to explicitly request Go
 Notice there are two kinds of GPU quota that you will need to adjust:
 
 1. You should first change your quota of *GPU (all regions)*.  Filter the *Metric* to be *GPU (all regions)*, *Location*  to be *Global*.
-Then select *Edit Quotas* and request an increase to 2 GPUs (but you will be using 1 GPU at any given time).
+Then select *Edit Quotas* and request an increase to 1 GPU (you will need 1 GPU at any given time).
 
 <center><img src="img/gpu-all-regions.png" width="600"></center>
 
