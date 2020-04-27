@@ -173,7 +173,7 @@ You need to tweak a few more settings to enable remote access to Tensorboard plo
 4. Give it an arbitrary name, such as `tensorboard`.
 5. In `Targets` field, select `All instances in the network`.
 6. In `Source IP ranges`, enter `0.0.0.0/0`.
-7. In `Protocols and ports` field, select *Specified protocols and ports*. Then check `tcp` and `udp` and enter `6006`.
+7. In `Protocols and ports` field, select *Specified protocols and ports*. Then check `tcp` and `udp` and enter `6006, 3000`. `6006` is the default port for Tensorboard, and `3000` is the default port for Almond server.
 8. Click the blue button `Create`. You should see a page similar to this:
 
 <center><img src="img/firewall.png" width="600"></center>
