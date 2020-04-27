@@ -218,18 +218,18 @@ gcloud compute scp <user>@<instance-name>:/path/to/file.zip /local/path
 For example, to download files from our instance to the current folder, run this command from your laptop:
 
 ```
-gcloud compute scp tonystark@hw2-vm/home/shared/file.zip .
+gcloud compute scp tonystark@hw2-vm:/home/shared/file.zip .
 ```
 
 The transfer works in both directions. To upload a file to your instance, run this command from your laptop:
 
 ```
-gcloud compute scp /my/local/file tonystark@hw2-vm/home/shared/
+gcloud compute scp /my/local/file tonystark@hw2-vm:/home/shared/
 ```
 
 If you would like to transfer an entire folder, you will need to add a resursive flag: 
 ```
-gcloud compute scp --recursive /my/local/folder tonystark@hw2-vm/home/shared/
+gcloud compute scp --recurse /my/local/folder tonystark@hw2-vm:/home/shared/
 ```
 
 ### Other Tips
