@@ -155,7 +155,7 @@ Configuration sheet of your 2 VMs should look similar to these images:
 Pay attention to the monthly price, make sure you claim only necessary HW resources, so that you can use your GCP instance for longer. 
 **Once you run out of credits, the VM instance will be shut down automatically and you might lose unsaved data and models.** If you are almost running out of credits, contact the course staff.
 
-After deploying a VM, especially if it has a GPU, you might encounter an error message *The zone "zone" does not have enough resources available to fulfill the request.* You can delete the deployment and go back to choose another zone or try again in a few minutes. You can also try *NVIDIA Tesla K80* GPUs which are cheaper and easier to find, and change it to a V100 GPU later.
+After deploying a VM, especially if it has a GPU, you might encounter an error message *The zone "zone" does not have enough resources available to fulfill the request.* You can delete the deployment and go back to choose another zone or try again in a few minutes. You can also try *NVIDIA Tesla P100* GPUs which are cheaper and easier to find, and either train your models with them or change it to a V100 GPU later. Training on a *P100* is only slightly slower than a *V100*.
 
 You can always change number of CPUs, number of GPUs, CPU memory, and GPU type even after your VM has been created.
 Just stop your instance, go to your VM instance's details at *Compute Engine > VM instances* > [click on instance name]. 
